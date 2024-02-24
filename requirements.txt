@@ -1,0 +1,13 @@
+azure-common==1.1.28
+azure-core==1.29.5
+azure-identity==1.14.1
+azure-servicefabric==8.2.0.0
+matplotlib==3.8.2
+numpy==1.26.0
+pandas==1.5.3
+pandasai==1.5.12
+fastapi
+uvicorn
+sqlalchemy
+jinja2
+python-multipart

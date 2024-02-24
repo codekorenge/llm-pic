@@ -1,0 +1,188 @@
+# import sqlite3
+# from typing import Annotated
+
+# from click import File
+# from fastapi import Depends, FastAPI, Form, HTTPException, Request, UploadFile, status
+# from fastapi.responses import RedirectResponse
+# from fastapi.templating import Jinja2Templates
+# from pydantic import BaseModel
+# from sqlalchemy.orm import Session
+
+# import models
+# import service
+# from database import SessionLocal, engine
+
+# app = FastAPI()
+# models.Base.metadata.create_all(bind=engine)
+
+# templates = Jinja2Templates(directory="templates")
+
+
+# class PostBase(BaseModel):
+#     title: str
+#     content: str
+#     user_id: str
+
+
+# class UserBase(BaseModel):
+#     username: str
+
+
+# def get_db():
+#     db = SessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         db.close()
+
+
+# # Dependecy injection - which injects get_db() function.
+# db_dependecy = Annotated[Session, Depends(get_db)]
+
+
+# # @app.post("/users/", status_code=status.HTTP_201_CREATED)
+# # async def create_user(user: UserBase, db: db_dependecy):
+# #     # NOTE: user.dict() was deprecated in pydantic V2, so using the suggested model_dump().
+# #     # Serializes validated pydantic data into model.
+# #     db_user = models.User(**user.model_dump())
+# #     db.add(db_user)
+# #     db.commit()
+
+
+# # @app.get("/users/{user_id}", status_code=status.HTTP_200_OK)
+# # async def read_user(user_id: int, db: db_dependecy):
+# #     user = db.query(models.User).filter(models.User.id == user_id).first()
+# #     if user is None:
+# #         raise HTTPException(status_code=404, detail="User not found")
+# #     return user
+
+
+# # @app.get("/llm/{user_id}", status_code=status.HTTP_200_OK)
+# # async def read_user(user_id: int, db: db_dependecy):
+# #     # user = db.query(models.User).filter(models.User.id == user_id).first()
+# #     try:
+# #         response = service.call_llm()
+# #         print(response)
+# #         if response is None:
+# #             raise HTTPException(status_code=404, detail="User not found")
+# #         return response
+# #     except Exception as e:
+# #         return e
+
+
+# # @app.get("/llm/{user_id}", status_code=status.HTTP_200_OK)
+# # async def upload_file(file: Annotated[bytes, File()]):
+# #     # user = db.query(models.User).filter(models.User.id == user_id).first()
+# #     try:
+# #         response = service.call_llm()
+# #         print(response)
+# #         if response is None:
+# #             raise HTTPException(status_code=404, detail="User not found")
+# #         return response
+# #     except Exception as e:
+# #         return e
+
+
+# # @app.get("/")
+# # async def name(request: Request):
+# #     return templates.TemplateResponse(
+# #         "home.html", {"request": request, "name": "code with me"}
+# #     )
+
+
+# @app.get("/")
+# def home(request: Request, db: Session = Depends(get_db)):
+#     # todos = db.query(models.Todo).all()
+
+#     # return templates.TemplateResponse(
+#     #     "index.html", {"request": request, "todo_list": todos}
+#     # )
+#     return templates.TemplateResponse("index.html", {"request": request})
+
+
+# @app.post("/add")
+# # async def post_basic_form(
+# #     request: Request, query: str = Form(...), file: UploadFile = File(...)
+# # ):
+# def add(
+#     request: Request,
+#     title: str = Form(...),
+#     file: UploadFile = File(...),
+#     db: Session = Depends(get_db),
+# ):
+#     new_todo = models.Todo(title=title)
+#     db.add(new_todo)
+#     db.commit()
+#     # print(f"username: {query}")
+#     # print(f"Filename: {file.filename}")
+
+#     url = app.url_path_for("home")
+#     return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
+
+
+# @app.get("/update/{todo_id}")
+# def update(request: Request, todo_id: int, db: Session = Depends(get_db)):
+#     todo = db.query(models.Todo).filter(models.Todo.id == todo_id).first()
+#     todo.complete = not todo.complete
+#     db.commit()
+
+#     url = app.url_path_for("home")
+#     return RedirectResponse(url=url, status_code=status.HTTP_302_FOUND)
+
+
+# @app.get("/delete/{todo_id}")
+# def delete(request: Request, todo_id: int, db: Session = Depends(get_db)):
+#     todo = db.query(models.Todo).filter(models.Todo.id == todo_id).first()
+#     db.delete(todo)
+#     db.commit()
+
+#     url = app.url_path_for("home")
+#     return RedirectResponse(url=url, status_code=status.HTTP_302_FOUND)
+
+
+# uploadfile/main.py
+from fastapi import FastAPI, File, Form, Request, UploadFile
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+IMAGEDIR = "images/"
+
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.get("/")
+def home(request: Request):
+    # todos = db.query(models.Todo).all()
+
+    # return templates.TemplateResponse(
+    #     "index.html", {"request": request, "todo_list": todos}
+    # )
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+# @app.get("/file-upload", response_class=HTMLResponse)
+# def get_basic_form(request: Request):
+#     return templates.TemplateResponse("form.html", {"request": request})
+
+
+# @app.post("/file-upload", response_class=HTMLResponse)
+# async def post_basic_form(
+#     request: Request,
+#     username: str = Form(...),
+#     password: str = Form(...),
+#     file: UploadFile = File(...),
+# ):
+#     print(f"username: {username}")
+#     print(f"password: {password}")
+#     print(f"Filename: {file.filename}")
+
+#     contents = await file.read()
+
+#     # save the file
+#     with open(f"{IMAGEDIR}{file.filename}", "wb") as f:
+#         f.write(contents)
+
+#     return templates.TemplateResponse("form.html", {"request": request})

@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>FastAPI File Upload with Jinja2 Template</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="row main">
+        <div class="panel-heading">
+            <div class="panel-title text-center">
+                <h1 class="title">BioGenie v1.0</h1>
+                <hr />
+            </div>
+        </div> 
+        <div class="main-login main-center">
+            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="querytext" class="cols-sm-2 control-label">Query: </label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="querytext" id="querytext"  placeholder="Enter your query"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm" class="cols-sm-2 control-label">File: </label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                            <input type="file" name="file" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="form-group ">
+                    <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block login-button">
+                </div>
+                
+            </form>
+
+            <!-- To display response and image -->
+            <div class="form-group">
+                <label for="username" class="cols-sm-2 control-label">Response:{{queryresponse}} </label>
+            </div>
+
+            <div class="form-group">
+                <img src="data:image/jpeg;base64,{{ myImage | safe }}">
+                <!-- <img src="data:image/png;base64,"{{ myImage}}> -->
+            </div>
+
+        </div>
+    </div>
+</div>  
+</body>
+</html>
