@@ -1,0 +1,141 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+/* body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #595DB8;
+} */
+.chooseFile
+{
+  margin-left: 50px ;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+}
+.chooseInp
+{
+  margin-left: 20px;
+}
+.headLabel
+{
+  font-size: larger;
+  font-weight: bold;
+}
+.btn
+{
+  float: right;
+  width: 25%;
+}
+.header
+{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 100px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+.sortable-list {
+  /* width: 425px; */
+  width: auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 7px;
+  padding: 30px 25px 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+.sortable-list .item {
+  width: 48%;
+  margin: 10px auto;
+  list-style: none;
+  display: flex;
+  cursor: move;
+  /* background: #fff; */
+  background: LightGray;
+  align-items: center;
+  border-radius: 5px;
+  padding: 10px 13px;
+  /* margin: 0px 2px; */
+  margin-bottom: 11px;
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.06); */
+  border: 1px solid #ccc;
+  justify-content: space-between;
+}
+.item .details {
+  /* display: flex; */
+  align-items: center;
+}
+.item .details img {
+  height: 200px;
+  width: 200px;
+  pointer-events: none;
+  margin-right: 12px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+}
+.item .details span {
+  font-size: 1.13rem;
+}
+.item i {
+  color: #474747;
+  font-size: 1.13rem;
+}
+.item.dragging {
+  opacity: 0.6;
+}
+.item.dragging :where(.details, i) {
+  opacity: 0;
+}
+ 
+ 
+/* Test */
+ 
+/* Apply a background color to the body */
+body {
+    background-color: MediumSeaGreen;
+}
+ 
+/* Style the header */
+h1 {
+    color: #333;
+}
+ 
+/* Style the form */
+form {
+    margin-top: 20px;
+}
+ 
+/* Style the response list */
+.sortable-list {
+    background-color: MediumSeaGreen;
+    border-radius: 7px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+ 
+/* Style list items */
+.item {
+    background-color:MediumSeaGreen;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    margin-bottom: 15px;
+    padding: 15px;
+}
+ 
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .sortable-list {
+        padding: 15px;
+    }
+ 
+    .item {
+        padding: 10px;
+    }
+}

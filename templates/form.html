@@ -1,60 +1,52 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>FastAPI File Upload with Jinja2 Template</title>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-<link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask File Upload</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/script.js" defer></script>
+ 
 </head>
 <body>
-<div class="container">
-    <div class="row main">
-        <div class="panel-heading">
-            <div class="panel-title text-center">
-                <h1 class="title">BioGenie v1.0</h1>
-                <hr />
+    <h1 class="header">BioGenie</h1>
+    <div class="container">
+        <!-- <form class="form-horizontal" method="POST" enctype="multipart/form-data"></form> -->
+        <form method="POST" enctype="multipart/form-data">
+            <div class="chooseFile">
+                <label for="file">Choose a File:</label>
+                <input class="chooseInp" type="file" name="file" id="file" required>
             </div>
-        </div> 
-        <div class="main-login main-center">
-            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+           
+            <br><br>
+           
+            <label class="headLabel" for="query">Enter your query:</label>
+            <br><br>
+            <!-- <input type="text" name="query" id="query" required> -->
+            <input type="text" name ="querytext" id="querytext" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+           
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+        <br><br>
+        <h2>All Responses:</h2>
+        <ul class="sortable-list row">
 
-                <div class="form-group">
-                    <label for="querytext" class="cols-sm-2 control-label">Query: </label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="querytext" id="querytext"  placeholder="Enter your query"/>
-                        </div>
+            <!-- {% for response in response_list %} -->
+                <li class="item col-6" draggable="true">
+                    <div class="details">
+                        <span>{{queryresponse}}</span><br><br>
+                        <img src="data:image/jpeg;base64,{{ myImage | safe }}"><br>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm" class="cols-sm-2 control-label">File: </label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                            <input type="file" name="file" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="form-group ">
-                    <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block login-button">
-                </div>
-                
-            </form>
-
-            <!-- To display response and image -->
-            <div class="form-group">
-                <label for="username" class="cols-sm-2 control-label">Response:{{queryresponse}} </label>
-            </div>
-
-            <div class="form-group">
-                <img src="data:image/jpeg;base64,{{ myImage | safe }}">
-                <!-- <img src="data:image/png;base64,"{{ myImage}}> -->
-            </div>
-
-        </div>
+                </li>
+            <!-- {%endfor%} -->
+          </ul>
     </div>
-</div>  
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 </body>
 </html>
