@@ -68,7 +68,6 @@ def make_query_only(query: str):
 
 # The purpose of this method is for uploading files and query regading the file data to OpenAI through PandasAI.
 # Therefore, at least one file and query must present.
-# Requirements: two files, 2 question, one related to image, another related scalar.
 def make_query(buffer: bytes, query: str):
     llm = AzureOpenAI(
         api_token="0c6bd275471947ffa99d5a0a9f536df6",

@@ -8,20 +8,20 @@ import openai_service
 # from openai_service import make_query
 
 
-# # Single file and related question works with graph.
-# class TestAIService(unittest.TestCase):
-#     def test_query_openai(self):
+# Single file and related question works with graph.
+class TestAIService(unittest.TestCase):
+    def test_query_openai(self):
 
-#         file = open("data/clinical_luad1.csv", mode="rb")
-#         data = file.read()
-#         try:
-#             response, is_image = openai_service.make_query(
-#                 data, "Show the distribution of ALK?"
-#             )
-#             self.assertEqual(is_image, True)
-#             print(f"Response: <{response}>.")
-#         except Exception as e:
-#             print(e)
+        file = open("data/clinical_luad1.csv", mode="rb")
+        data = file.read()
+        try:
+            response, is_image = openai_service.make_query(
+                data, "Show the distribution of ALK?"
+            )
+            self.assertEqual(is_image, True)
+            print(f"Response: <{response}>.")
+        except Exception as e:
+            print(e)
 
 
 # # Show the distribution of ALK
@@ -68,22 +68,22 @@ import openai_service
 
 # Compare the distribution of values of EGFR for each values from primary_therapy_outcome_success
 # Question is realted to both files.
-class TestAIService(unittest.TestCase):
-    def test_query_openai_question_only(self):
-        try:
-            response = openai_service.make_query_only(
-                "Compare the distribution of values of EGFR for each values from primary_therapy_outcome_success",
-            )
-            print(f"Response1: <{response}>.")
+# class TestAIService(unittest.TestCase):
+#     def test_query_openai_question_only(self):
+#         try:
+#             response = openai_service.make_query_only(
+#                 "Compare the distribution of values of EGFR for each values from primary_therapy_outcome_success",
+#             )
+#             print(f"Response1: <{response}>.")
 
-            response = openai_service.make_query_only(
-                "Count the total number of effect of EGFR.",
-            )
-            # self.assertEqual(is_image, True)
-            print(f"Response2: <{response}>.")
+#             response = openai_service.make_query_only(
+#                 "Count the total number of effect of EGFR.",
+#             )
+#             # self.assertEqual(is_image, True)
+#             print(f"Response2: <{response}>.")
 
-        except Exception as e:
-            print(e)
+#         except Exception as e:
+#             print(e)
 
 
 if __name__ == "__main__":
