@@ -7,10 +7,11 @@ import pandas as pd
 from pandasai import Agent
 from pandasai.llm import AzureOpenAI
 
+
 # Requirements: two files, 2 question, one related to image, another related scalar.
 def make_query_only(query: str):
     llm = AzureOpenAI(
-        api_token="0c6bd275471947ffa99d5a0a9f536df6",
+        api_token="",
         azure_endpoint="https://genai-lsr.openai.azure.com/",
         api_version="2023-08-01-preview",
         deployment_name="gpt-turbo-4k",
@@ -26,6 +27,7 @@ def make_query_only(query: str):
     # print(f"Response from OpenAI: <{response}>.")
 
     return response
+
 
 # Requirements: two files, 2 question, one related to image, another related scalar.
 def make_query2(buffer1: bytes, buffer2: bytes, query: str):
@@ -66,6 +68,28 @@ def make_query_only(query: str):
     # If array of df, put them inside [] with commas.
     agent = Agent([clinical, mutation], config={"llm": llm}, memory_size=10)
     response = agent.chat(query)
+
+    try:
+        # Response either contains image or text only.
+        is_file = False
+        try:
+            if os.path.isfile(response):
+                is_file = True
+        except Exception as e:
+            print(e)
+
+        if is_file:
+            file = open(response, mode="rb")
+            data = file.read()
+            base64_encoded_image = base64.b64encode(data).decode("utf-8")
+            print("Service returns image ...")
+            return base64_encoded_image, True
+        else:
+            print("Service returns no-image ...")
+            return response, False
+    except Exception as e:
+        print("Exception in service >>>")
+        print(e)
 
     # print(f"Response from OpenAI: <{response}>.")
 

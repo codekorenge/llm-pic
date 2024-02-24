@@ -17,12 +17,12 @@
         <form method="POST" enctype="multipart/form-data">
             <div class="chooseFile">
                 <label for="file">Choose a File 1:</label>
-                <input class="chooseInp" type="file" name="file1" id="file1" required>
+                <input class="chooseInp" type="file" name="file1" id="file1">
             </div>
            <br>
            <div class="chooseFile">
             <label for="file">Choose a File 2:</label>
-            <input class="chooseInp" type="file" name="file2" id="file2" required>
+            <input class="chooseInp" type="file" name="file2" id="file2">
          </div>
             <br><br>
            
@@ -36,14 +36,24 @@
         </form>
         <br><br>
         <h2>All Responses:</h2>
-        <ul class="sortable-list row">    
+        <!-- <ul class="sortable-list row">    
  
             {% for value in result %}
             <div class="item col-6 details" draggable="true">
                 <img src="data:image/jpeg;base64,{{ value.appImg| safe }} ">                    
             </div>
             {% endfor %}
-        </ul>
+        </ul> -->
+
+        <!-- To display response and image -->
+        <div class="form-group">
+            <label for="username" class="cols-sm-2 control-label">Response:{{queryresponse}} </label>
+        </div>
+
+        <div class="form-group">
+            <img src="data:image/jpeg;base64,{{ myImage | safe }}">
+        </div> 
+
     </div>
  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

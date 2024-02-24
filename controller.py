@@ -37,7 +37,8 @@ async def post_basic_form(
     print(f"Filename: {file1.filename}")
     print(f"Filename: {file2.filename}")
 
-    if file1 and file2:
+    # if os.stat(file1.file).st_size != 0 and os.stat(file2.file).st_size != 0:
+    if file1.filename != "" and file2.filename != "":
         print(f"Filename: {file1.filename}")
         print(f"Filename: {file2.filename}")
         return templates.TemplateResponse(
@@ -45,26 +46,30 @@ async def post_basic_form(
             {"request": request, "queryresponse": "File uploaded!"},
         )
 
+    print(f"To process query ...")
     response, has_image = openai_service.make_query_only(querytext)
     print(response)
     if has_image:
         # os.remove(response)
         print("Controller returns image ...")
-        imgList.append({"appImg": response})
-        print("imglist:", len(imgList))
+        # imgList.append({"appImg": response})
+        # print("imglist:", len(imgList))
+        # return templates.TemplateResponse(
+        #     "form.html",
+        #     {
+        #         "request": request,
+        #         "myImage": response,
+        #         "queryresponse": "Has-Image",
+        #         "result": imgList,
+        #     },
+        # )
         return templates.TemplateResponse(
-            "form.html",
-            {
-                "request": request,
-                "myImage": response,
-                "queryresponse": "Has-Image",
-                "result": imgList,
-            },
+            "form.html", {"request": request, "myImage": response}
         )
     else:
         print("Controller returns no-image ...")
         return templates.TemplateResponse(
-            "form.html", {"request": request, "queryresponse": response}
+            "form.html", {"request": request, "queryresponse": response.to_string}
         )
 
 

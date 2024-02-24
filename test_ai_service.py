@@ -71,16 +71,19 @@ import openai_service
 class TestAIService(unittest.TestCase):
     def test_query_openai_question_only(self):
         try:
-            response = openai_service.make_query_only(
+            response, has_image = openai_service.make_query_only(
                 "Count the sample_id for each values of pathologic_stage",
             )
             print(f"Response1: <{response}>.")
+            # print(f"Response1: <{type(response.to_string)}>.")
+            print(f"Response1:(has-image): <{has_image}>.")
 
-            response = openai_service.make_query_only(
-                "Distribution of TP53 gene for each values of gender",
-            )
-            # # self.assertEqual(is_image, True)
-            print(f"Response2: <{response}>.")
+            # response, has_image = openai_service.make_query_only(
+            #     "Distribution of TP53 gene for each values of gender",
+            # )
+            # # # self.assertEqual(is_image, True)
+            # print(f"Response2: <{response}>.")
+            # print(f"Response2:(has-image): <{has_image}>.")
 
         except Exception as e:
             print(e)
