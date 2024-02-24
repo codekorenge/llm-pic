@@ -7,6 +7,25 @@ import pandas as pd
 from pandasai import Agent
 from pandasai.llm import AzureOpenAI
 
+# Requirements: two files, 2 question, one related to image, another related scalar.
+def make_query_only(query: str):
+    llm = AzureOpenAI(
+        api_token="0c6bd275471947ffa99d5a0a9f536df6",
+        azure_endpoint="https://genai-lsr.openai.azure.com/",
+        api_version="2023-08-01-preview",
+        deployment_name="gpt-turbo-4k",
+        api_base="https://genai-lsr.openai.azure.com/",
+    )
+    clinical = pd.read_csv("data/lc_clinical_fil_cols_filtered.csv")
+    mutation = pd.read_csv("data/lc_mutation_filtered.csv")
+
+    # If array of df, put them inside [] with commas.
+    agent = Agent([clinical, mutation], config={"llm": llm}, memory_size=10)
+    response = agent.chat(query)
+
+    # print(f"Response from OpenAI: <{response}>.")
+
+    return response
 
 # Requirements: two files, 2 question, one related to image, another related scalar.
 def make_query2(buffer1: bytes, buffer2: bytes, query: str):
@@ -41,14 +60,14 @@ def make_query_only(query: str):
         deployment_name="gpt-turbo-4k",
         api_base="https://genai-lsr.openai.azure.com/",
     )
-    clinical = pd.read_csv("data/clinical_luad1.csv")
-    mutation = pd.read_csv("data/mutation_luad1.csv")
+    clinical = pd.read_csv("data/lc_clinical_fil_cols_filtered.csv")
+    mutation = pd.read_csv("data/lc_mutation_filtered.csv")
 
     # If array of df, put them inside [] with commas.
     agent = Agent([clinical, mutation], config={"llm": llm}, memory_size=10)
     response = agent.chat(query)
 
-    print(f"Response from OpenAI: <{response}>.")
+    # print(f"Response from OpenAI: <{response}>.")
 
     return response
 

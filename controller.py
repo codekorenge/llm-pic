@@ -10,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 import openai_service
 
 app = FastAPI()
+imgList = []
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -17,6 +18,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # This is similar to index method for returning the intial form.
 @app.get("/query", response_class=HTMLResponse)
 def get_basic_form(request: Request):
+    print("get")
     return templates.TemplateResponse(
         "form.html", {"request": request, "queryresponse": None}
     )
@@ -27,30 +29,36 @@ def get_basic_form(request: Request):
 async def post_basic_form(
     request: Request,
     querytext: str = Form(...),
-    file: Optional[UploadFile] = None,
+    file1: Optional[UploadFile] = None,
+    file2: Optional[UploadFile] = None,
 ):
+    print("post")
     print(f"Query: {querytext}")
-    print(f"Filename: {file.filename}")
+    print(f"Filename: {file1.filename}")
+    print(f"Filename: {file2.filename}")
 
-    if not file or not querytext:
+    if file1 and file2:
+        print(f"Filename: {file1.filename}")
+        print(f"Filename: {file2.filename}")
         return templates.TemplateResponse(
             "form.html",
-            {"request": request, "queryresponse": "No file or query present!"},
+            {"request": request, "queryresponse": "File uploaded!"},
         )
 
-    contents = await file.read()
-    response, has_image = openai_service.make_query(contents, querytext)
+    response, has_image = openai_service.make_query_only(querytext)
     print(response)
-
     if has_image:
         # os.remove(response)
         print("Controller returns image ...")
+        imgList.append({"appImg": response})
+        print("imglist:", len(imgList))
         return templates.TemplateResponse(
             "form.html",
             {
                 "request": request,
                 "myImage": response,
                 "queryresponse": "Has-Image",
+                "result": imgList,
             },
         )
     else:

@@ -16,10 +16,14 @@
         <!-- <form class="form-horizontal" method="POST" enctype="multipart/form-data"></form> -->
         <form method="POST" enctype="multipart/form-data">
             <div class="chooseFile">
-                <label for="file">Choose a File:</label>
-                <input class="chooseInp" type="file" name="file" id="file" required>
+                <label for="file">Choose a File 1:</label>
+                <input class="chooseInp" type="file" name="file1" id="file1" required>
             </div>
-           
+           <br>
+           <div class="chooseFile">
+            <label for="file">Choose a File 2:</label>
+            <input class="chooseInp" type="file" name="file2" id="file2" required>
+         </div>
             <br><br>
            
             <label class="headLabel" for="query">Enter your query:</label>
@@ -32,17 +36,14 @@
         </form>
         <br><br>
         <h2>All Responses:</h2>
-        <ul class="sortable-list row">
-
-            <!-- To display response and image -->
-            <div class="form-group">
-                <label for="username" class="cols-sm-2 control-label">Response:{{queryresponse}} </label>
+        <ul class="sortable-list row">    
+ 
+            {% for value in result %}
+            <div class="item col-6 details" draggable="true">
+                <img src="data:image/jpeg;base64,{{ value.appImg| safe }} ">                    
             </div>
-
-            <div class="form-group">
-                <img src="data:image/jpeg;base64,{{ myImage | safe }}">
-                <!-- <img src="data:image/png;base64,"{{ myImage}}> -->
-            </div>
+            {% endfor %}
+        </ul>
     </div>
  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -72,9 +72,11 @@
   /* display: flex; */
   align-items: center;
 }
+.item img {
+  width: 100%;
+  height: auto;
+}
 .item .details img {
-  height: 200px;
-  width: 200px;
   pointer-events: none;
   margin-right: 12px;
   object-fit: cover;
@@ -127,6 +129,7 @@ form {
     box-shadow: 0 2px 4px rgba(0,0,0,0.06);
     margin-bottom: 15px;
     padding: 15px;
+    justify-content: center;
 }
  
 /* Responsive design adjustments */
